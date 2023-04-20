@@ -14,5 +14,10 @@ export const getAllProducts = async () => {
 
 export const updateProduct = async (formdata) => {
 	const result = await API.post("/update-product/:id");
-    return result;
+	return result;
+};
+
+export const deleteProduct = async (id) => {
+	const result = await API.delete(`/delete-product/${id}`);
+	return result;
 };

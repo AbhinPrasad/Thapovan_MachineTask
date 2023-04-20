@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Product from "../models/productModel.js";
 import cloudinary from "../utils/cloudinary.js";
 
@@ -33,4 +34,14 @@ export const getProducts = async (req, res) => {
 
 export const updateProduct = async (req, res) => {};
 
-export const deleteProduct = async (req, res) => {};
+export const deleteProduct = async (req, res) => {
+	console.log(req.params.id);
+	try {
+		const id = req.params.id;
+		await Product.findByIdAndDelete(id);
+		res.status(200).json({ message: "product deleted" });
+	} catch (error) {
+		res.status(500).json(error.message);
+		console.log(error);
+	}
+};
