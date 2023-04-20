@@ -1,7 +1,12 @@
 import React from "react";
+import { Home } from "./pages";
 
 const App = () => {
-	return <div className="app"></div>;
+	return (
+		<>
+			<Home />
+		</>
+	);
 };
 
 export default App;
