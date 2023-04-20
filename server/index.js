@@ -4,11 +4,13 @@ import colors from "colors";
 import { connectDB } from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
 
+
+
 const app = express();
 
 app.use(cors({ origin: "http://localhost:3000" }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use("/", productRoutes);

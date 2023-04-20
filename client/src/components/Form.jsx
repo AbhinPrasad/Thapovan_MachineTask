@@ -23,7 +23,7 @@ const Form = () => {
 		initialValues: {
 			productName: "",
 			price: "",
-			image: ""
+			product_image: ""
 		},
 		onSubmit: (values, { resetForm }) => {
 			console.log(values);
@@ -54,11 +54,11 @@ const Form = () => {
 					value={formik.values.price}
 				/>
 				<TextField
-					name="image"
+					name="product_image"
 					variant="outlined"
 					type="file"
 					onChange={formik.handleChange}
-					value={formik.values.image}
+					value={formik.values.product_image}
 				/>
 				<Button variant="contained" type="submit">
 					Submit
