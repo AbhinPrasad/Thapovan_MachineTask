@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Product from "../models/productModel.js";
 import cloudinary from "../utils/cloudinary.js";
 
@@ -32,7 +31,22 @@ export const getProducts = async (req, res) => {
 	}
 };
 
-export const updateProduct = async (req, res) => {};
+export const updateProduct = async (req, res) => {
+	console.log(req.body);
+	console.log(req.params.id);
+	try {
+		const { productName, price } = req.body;
+		const imgUrl = await cloudinary.uploader.upload(req.file.path);
+		const update = await Product.findByIdAndUpdate(req.params.id, {
+			productName: productName,
+			price: price,
+			image: imgUrl.url
+		});
+		res.status(200).json(update);
+	} catch (error) {
+		res.status(500).json(error.message);
+	}
+};
 
 export const deleteProduct = async (req, res) => {
 	console.log(req.params.id);

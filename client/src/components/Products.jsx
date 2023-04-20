@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { deleteProduct, getAllProducts } from "../api/productRequests";
+import Form from "./Form";
+import Update from "./Update";
 
 const Products = () => {
 	const [products, setProducts] = useState([]);
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		getAllProducts()
@@ -19,10 +22,13 @@ const Products = () => {
 		deleteProduct(id);
 	};
 
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
+
 	return products.map((product) => {
 		return (
-			<>
-				<div className="card">
+			<div style={{display:"flex",flexDirection:"column"}} key={product._id}>
+        <div className="card" >
 					<div className="image">
 						<img src={product.image} alt="" />
 					</div>
@@ -30,14 +36,19 @@ const Products = () => {
 					<span className="price">${product.price}</span>
 				</div>
 				<div className="btns">
-					<Button variant="outlined">update</Button>
+					<Button variant="outlined" onClick={handleOpen}>
+						update
+					</Button>
 					<Button
 						variant="outlined"
 						onClick={() => handleDelete(product._id)}>
 						delete
 					</Button>
 				</div>
-			</>
+				<Modal open={open} onClose={handleClose}>
+					<Update id={product._id} products={products} setProducts={setProducts} />
+				</Modal>
+      </div>
 		);
 	});
 };

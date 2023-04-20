@@ -1,7 +1,7 @@
 import React from "react";
 import { TextField, Box, Button } from "@mui/material";
 import { useFormik } from "formik";
-import { addProduct } from "../api/productRequests";
+import { updateProduct } from "../api/productRequests";
 
 const style = {
 	position: "absolute",
@@ -18,7 +18,9 @@ const style = {
 	p: 4
 };
 
-const Form = () => {
+const Update = (props) => {
+	const { id, products, setProducts } = props;
+
 	const formik = useFormik({
 		initialValues: {
 			productName: "",
@@ -27,8 +29,14 @@ const Form = () => {
 		},
 		onSubmit: (values, { resetForm }) => {
 			console.log(values);
-			addProduct(values);
-			// resetForm({values:""})
+			updateProduct(values, id)
+				.then((res) => {
+					setProducts(res.data);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+			resetForm({ values: "" });
 		}
 	});
 
@@ -68,4 +76,4 @@ const Form = () => {
 	);
 };
 
-export default Form;
+export default Update;

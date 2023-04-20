@@ -12,8 +12,8 @@ export const getAllProducts = async () => {
 	return result;
 };
 
-export const updateProduct = async (formdata) => {
-	const result = await API.post("/update-product/:id");
+export const updateProduct = async (formdata, id) => {
+	const result = await API.post(`/update-product/${id}`, formdata);
 	return result;
 };
 
