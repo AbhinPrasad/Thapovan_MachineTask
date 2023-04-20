@@ -3,10 +3,10 @@ import { Navbar, Products } from "../components";
 
 const Home = () => {
 	return (
-		<div>
+		<>
 			<Navbar />
 			<Products />
-		</div>
+		</>
 	);
 };
 
