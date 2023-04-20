@@ -27,6 +27,8 @@ const Form = () => {
 		},
 		onSubmit: (values, { resetForm }) => {
 			console.log(values);
+			addProduct(values);
+			// resetForm({values:""})
 		}
 	});
 
