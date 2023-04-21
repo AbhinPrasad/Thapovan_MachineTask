@@ -3,6 +3,7 @@ import cloudinary from "../utils/cloudinary.js";
 
 //ADD PRODUCT
 export const addProduct = async (req, res) => {
+	// console.log(req.get('Content-Type'));
 	// console.log(req.body);
 	// console.log(req.file);
 	try {

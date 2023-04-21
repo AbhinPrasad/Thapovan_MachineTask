@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "@mui/material";
 import { deleteProduct, getAllProducts } from "../api/productRequests";
-import Form from "./Form";
 import Update from "./Update";
 
 const Products = () => {

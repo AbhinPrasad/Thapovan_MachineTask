@@ -21,12 +21,6 @@ const style = {
 const Update = (props) => {
 	const { id, products, setProducts } = props;
 
-    // Update.propTypes = {
-    //     id: PropTypes.string.isRequired,
-    //     products: PropTypes.array.isRequired,
-    //     setProducts: PropTypes.func.isRequired
-    //   };
-
 	const formik = useFormik({
 		initialValues: {
 			productName: "",
@@ -34,9 +28,12 @@ const Update = (props) => {
 			product_image: ""
 		},
 		onSubmit: (values, { resetForm }) => {
-			updateProduct(values, id)
+			const formData = new FormData();
+			formData.append("productName", values.productName);
+			formData.append("price", values.price);
+			formData.append("product_image", values.product_image);
+			updateProduct(formData, id)
 				.then((res) => {
-                    console.log(res.data,"res");
 					setProducts(res.data);
 				})
 				.catch((err) => {
@@ -71,8 +68,12 @@ const Update = (props) => {
 					name="product_image"
 					variant="outlined"
 					type="file"
-					onChange={formik.handleChange}
-					value={formik.values.product_image}
+					onChange={(event) => {
+						formik.setValues({
+							...formik.values,
+							product_image: event.currentTarget.files[0]
+						});
+					}}
 				/>
 				<Button variant="contained" type="submit">
 					Submit
