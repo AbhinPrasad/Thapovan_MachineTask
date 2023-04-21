@@ -47,7 +47,7 @@ export const getProducts = async (req, res) => {
 
 //UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
-	console.log(req.body);
+	// console.log(req.body);
 	// console.log(req.params.id);
 	try {
 		const { productName, price } = req.body;

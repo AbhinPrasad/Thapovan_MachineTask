@@ -13,7 +13,6 @@ export const getAllProducts = async () => {
 };
 
 export const updateProduct = async (formdata, id) => {
-	console.log(formdata,id)
 	const result = await API.put(`/update-product/${id}`, formdata);
 	return result;
 };

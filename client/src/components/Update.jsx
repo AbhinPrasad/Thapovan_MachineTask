@@ -36,6 +36,7 @@ const Update = (props) => {
 		onSubmit: (values, { resetForm }) => {
 			updateProduct(values, id)
 				.then((res) => {
+                    console.log(res.data,"res");
 					setProducts(res.data);
 				})
 				.catch((err) => {

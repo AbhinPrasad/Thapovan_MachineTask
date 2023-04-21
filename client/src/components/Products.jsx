@@ -27,8 +27,8 @@ const Products = () => {
 
 	return (
 		<>
-			{products?products.map((product) => (
-				 
+			{Array.isArray(products) && products.length > 0 ? (
+				products.map((product) => (
 					<div
 						style={{ display: "flex", flexDirection: "column" }}
 						key={product._id}>
@@ -57,8 +57,10 @@ const Products = () => {
 							/>
 						</Modal>
 					</div>
-				
-			)):"no products"}
+				))
+			) : (
+				<p>No products found.</p>
+			)}
 		</>
 	);
 };
