@@ -1,20 +1,32 @@
 import Product from "../models/productModel.js";
 import cloudinary from "../utils/cloudinary.js";
 
+//ADD PRODUCT
 export const addProduct = async (req, res) => {
 	// console.log(req.body);
 	// console.log(req.file);
 	try {
 		const { productName, price } = req.body;
-		const imgUrl = await cloudinary.uploader.upload(req.file.path);
+
+		if (req.file && req.file.path) {
+			const imgUrl = await cloudinary.uploader.upload(req.file.path);
+
+			const product = new Product({
+				productName: productName,
+				price: price,
+				image: imgUrl.url
+			});
+
+			await product.save();
+		}
 
 		const product = new Product({
 			productName: productName,
 			price: price,
-			image: imgUrl.url
+			image: "no image"
 		});
 
-		const data = await product.save();
+		await product.save();
 		res.status(201).json({ message: "Product added successfully" });
 	} catch (error) {
 		console.log(error);
@@ -22,6 +34,7 @@ export const addProduct = async (req, res) => {
 	}
 };
 
+//GET ALL PRODUCTS
 export const getProducts = async (req, res) => {
 	try {
 		const products = await Product.find();
@@ -31,9 +44,10 @@ export const getProducts = async (req, res) => {
 	}
 };
 
+//UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
-	console.log(req.body);
-	console.log(req.params.id);
+	// console.log(req.body);
+	// console.log(req.params.id);
 	try {
 		const { productName, price } = req.body;
 		const imgUrl = await cloudinary.uploader.upload(req.file.path);
@@ -48,8 +62,9 @@ export const updateProduct = async (req, res) => {
 	}
 };
 
+//DELETE PRODUCT
 export const deleteProduct = async (req, res) => {
-	console.log(req.params.id);
+	// console.log(req.params.id);
 	try {
 		const id = req.params.id;
 		await Product.findByIdAndDelete(id);

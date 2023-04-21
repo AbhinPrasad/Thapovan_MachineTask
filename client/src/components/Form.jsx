@@ -1,7 +1,8 @@
 import React from "react";
-import { TextField, Box, Button } from "@mui/material";
+import { TextField, Box, Button,Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { addProduct } from "../api/productRequests";
+import validationSchema from "../validation/validationSchema";
 
 const style = {
 	position: "absolute",
@@ -25,10 +26,11 @@ const Form = () => {
 			price: "",
 			product_image: ""
 		},
+		validationSchema: validationSchema,
 		onSubmit: (values, { resetForm }) => {
 			console.log(values);
 			addProduct(values);
-			// resetForm({values:""})
+			resetForm({values:""})
 		}
 	});
 
@@ -46,6 +48,18 @@ const Form = () => {
 					onChange={formik.handleChange}
 					value={formik.values.productName}
 				/>
+                {formik.touched.productName && formik.errors.productName ? (
+							<Typography
+								sx={{
+									color: "red",
+									lineHeight: "0",
+									margin: "5px",
+									fontWeight: "500",
+									fontSize: "12px"
+								}}>
+								{formik.errors.productName}
+							</Typography>
+						) : null}
 				<TextField
 					name="price"
 					label="Price"
@@ -53,6 +67,18 @@ const Form = () => {
 					onChange={formik.handleChange}
 					value={formik.values.price}
 				/>
+                {formik.touched.price && formik.errors.price ? (
+							<Typography
+								sx={{
+									color: "red",
+									lineHeight: "0",
+									margin: "5px",
+									fontWeight: "500",
+									fontSize: "12px"
+								}}>
+								{formik.errors.price}
+							</Typography>
+						) : null}
 				<TextField
 					name="product_image"
 					variant="outlined"
