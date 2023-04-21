@@ -21,6 +21,12 @@ const style = {
 const Update = (props) => {
 	const { id, products, setProducts } = props;
 
+    // Update.propTypes = {
+    //     id: PropTypes.string.isRequired,
+    //     products: PropTypes.array.isRequired,
+    //     setProducts: PropTypes.func.isRequired
+    //   };
+
 	const formik = useFormik({
 		initialValues: {
 			productName: "",
@@ -28,7 +34,6 @@ const Update = (props) => {
 			product_image: ""
 		},
 		onSubmit: (values, { resetForm }) => {
-			console.log(values);
 			updateProduct(values, id)
 				.then((res) => {
 					setProducts(res.data);

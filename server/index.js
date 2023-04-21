@@ -3,6 +3,8 @@ import cors from "cors";
 import colors from "colors";
 import { connectDB } from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
+import dotenv from "dotenv"
+dotenv.config()
 
 
 
@@ -15,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 //routes
 app.use("/", productRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT;
 
 connectDB();
 

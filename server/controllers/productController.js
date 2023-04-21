@@ -17,17 +17,18 @@ export const addProduct = async (req, res) => {
 				image: imgUrl.url
 			});
 
-			await product.save();
+			const newProduct = await product.save();
+			res.status(201).json(newProduct);
+		} else {
+			const product = new Product({
+				productName: productName,
+				price: price,
+				image: "no image"
+			});
+
+			const newProduct = await product.save();
+			res.status(201).json(newProduct);
 		}
-
-		const product = new Product({
-			productName: productName,
-			price: price,
-			image: "no image"
-		});
-
-		await product.save();
-		res.status(201).json({ message: "Product added successfully" });
 	} catch (error) {
 		console.log(error);
 		res.status(500).json(error.message);
@@ -46,17 +47,27 @@ export const getProducts = async (req, res) => {
 
 //UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
-	// console.log(req.body);
+	console.log(req.body);
 	// console.log(req.params.id);
 	try {
 		const { productName, price } = req.body;
-		const imgUrl = await cloudinary.uploader.upload(req.file.path);
-		const update = await Product.findByIdAndUpdate(req.params.id, {
-			productName: productName,
-			price: price,
-			image: imgUrl.url
-		});
-		res.status(200).json(update);
+
+		if (req.file && req.file.path) {
+			const imgUrl = await cloudinary.uploader.upload(req.file.path);
+			const update = await Product.findByIdAndUpdate(req.params.id, {
+				productName: productName,
+				price: price,
+				image: imgUrl.url
+			});
+			res.status(200).json(update);
+		} else {
+			const update = await Product.findByIdAndUpdate(req.params.id, {
+				productName: productName,
+				price: price,
+				image: "no image"
+			});
+			res.status(200).json(update);
+		}
 	} catch (error) {
 		res.status(500).json(error.message);
 	}

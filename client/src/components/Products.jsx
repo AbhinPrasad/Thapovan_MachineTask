@@ -25,32 +25,42 @@ const Products = () => {
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
-	return products.map((product) => {
-		return (
-			<div style={{display:"flex",flexDirection:"column"}} key={product._id}>
-        <div className="card" >
-					<div className="image">
-						<img src={product.image} alt="" />
+	return (
+		<>
+			{products?products.map((product) => (
+				 
+					<div
+						style={{ display: "flex", flexDirection: "column" }}
+						key={product._id}>
+						<div className="card">
+							<div className="image">
+								<img src={product.image} alt="" />
+							</div>
+							<span className="title">{product.productName}</span>
+							<span className="price">${product.price}</span>
+						</div>
+						<div className="btns">
+							<Button variant="outlined" onClick={handleOpen}>
+								update
+							</Button>
+							<Button
+								variant="outlined"
+								onClick={() => handleDelete(product._id)}>
+								delete
+							</Button>
+						</div>
+						<Modal open={open} onClose={handleClose}>
+							<Update
+								id={product._id}
+								products={products}
+								setProducts={setProducts}
+							/>
+						</Modal>
 					</div>
-					<span className="title">{product.productName}</span>
-					<span className="price">${product.price}</span>
-				</div>
-				<div className="btns">
-					<Button variant="outlined" onClick={handleOpen}>
-						update
-					</Button>
-					<Button
-						variant="outlined"
-						onClick={() => handleDelete(product._id)}>
-						delete
-					</Button>
-				</div>
-				<Modal open={open} onClose={handleClose}>
-					<Update id={product._id} products={products} setProducts={setProducts} />
-				</Modal>
-      </div>
-		);
-	});
+				
+			)):"no products"}
+		</>
+	);
 };
 
 export default Products;
